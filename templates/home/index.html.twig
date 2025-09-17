@@ -1,0 +1,185 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}README - Vitrine des projets MiNET{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 hero-content">
+                <h1 class="hero-title">Bienvenue sur<br><span style="color: var(--minet-primary);">README</span></h1>
+                <p class="hero-subtitle">README est la plateforme de présentation des projets et portfolios des membres de l'association MiNET de Télécom SudParis. Découvrez nos innovations, nos réalisations et notre expertise technique.</p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="{{ path('app_project_index') }}" class="btn btn-minet-primary">
+                        <i class="fas fa-project-diagram me-2"></i>Voir les Projets
+                    </a>
+                    <a href="{{ path('app_portfolio_index') }}" class="btn btn-minet-outline">
+                        <i class="fas fa-folder me-2"></i>Explorer les Portfolios
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="{{ asset('images/minet-logo.svg') }}" alt="Logo MiNET" class="network-icon" style="width: 300px; height: 300px; filter: drop-shadow(0 0 20px rgba(14, 165, 233, 0.3));">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Section -->
+<div class="py-5 stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="stat-card">
+                    <div class="stat-number">{{ portfolio_count }}</div>
+                    <div class="stat-label">Portfolios Actifs</div>
+                    <div class="mt-3">
+                        <a href="{{ path('app_portfolio_index') }}" class="btn btn-minet-outline btn-sm">
+                            <i class="fas fa-eye me-1"></i>Voir Tout
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="stat-card">
+                    <div class="stat-number">{{ project_count }}</div>
+                    <div class="stat-label">Projets Totaux</div>
+                    <div class="mt-3">
+                        <a href="{{ path('app_project_index') }}" class="btn btn-minet-outline btn-sm">
+                            <i class="fas fa-eye me-1"></i>Voir Tout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Projects Section -->
+{% if recent_projects is not empty %}
+<div class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12">
+                <h2 class="section-header">Projets Récents</h2>
+                <p class="section-subtitle">Les dernières initiatives de nos membres</p>
+            </div>
+        </div>
+        <div class="row">
+            {% for project in recent_projects %}
+                <div class="col-md-4 mb-4">
+                    <div class="card project-card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ project.name }}</h5>
+                            <p class="card-text">{{ project.description|length > 100 ? project.description|slice(0, 100) ~ '...' : project.description }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge badge-minet-{{ project.status == 'completed' ? 'completed' : (project.status == 'active' ? 'active' : 'planned') }}">
+                                    {{ project.status == 'completed' ? 'Terminé' : (project.status == 'active' ? 'Actif' : 'Planifié') }}
+                                </span>
+                                {% if project.startDate %}
+                                    <small class="text-muted">{{ project.startDate|date('M Y') }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{{ path('app_project_show', {'id': project.id}) }}" class="btn btn-minet-primary btn-sm">
+                                <i class="fas fa-eye me-1"></i>Voir Détails
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{{ path('app_project_index') }}" class="btn btn-minet-outline">
+                <i class="fas fa-plus me-1"></i>Voir Tous les Projets
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- About Section -->
+<div class="py-5 about-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-header">À propos de README</h2>
+                <p class="hero-subtitle">README est la vitrine numérique de l'association MiNET. Cette plateforme présente les portfolios de nos membres et leurs projets collaboratifs qui font avancer nos compétences techniques et notre impact communautaire. Une fois terminé, ce projet sera accessible sur readme.minet.net.</p>
+                <div class="row mt-5">
+                    <div class="col-md-4 text-center mb-4">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h5 style="color: white; font-weight: 600;">Collaboration</h5>
+                        <p style="color: rgba(255, 255, 255, 0.7);">Travail d'équipe sur des projets de pointe</p>
+                    </div>
+                    <div class="col-md-4 text-center mb-4">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h5 style="color: white; font-weight: 600;">Apprentissage</h5>
+                        <p style="color: rgba(255, 255, 255, 0.7);">Développement continu des compétences</p>
+                    </div>
+                    <div class="col-md-4 text-center mb-4">
+                        <div class="feature-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h5 style="color: white; font-weight: 600;">Innovation</h5>
+                        <p style="color: rgba(255, 255, 255, 0.7);">Repousser les limites de la technologie</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TODO Section -->
+<div class="py-5" style="background: rgba(15, 23, 42, 0.8); border-top: 1px solid var(--minet-neutral-700);">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h2 class="section-header">Projets en Cours - TODO</h2>
+                <p class="section-subtitle">Les prochaines étapes pour améliorer README</p>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="stat-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-code text-warning me-3 fa-2x"></i>
+                                <h5 style="color: white; margin: 0;">Améliorations Techniques</h5>
+                            </div>
+                            <ul style="color: rgba(255, 255, 255, 0.8); text-align: left;">
+                                <li>Système d'authentification pour les membres</li>
+                                <li>API REST pour les données</li>
+                                <li>Interface d'administration</li>
+                                <li>Upload d'images pour les projets</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="stat-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-paint-brush text-info me-3 fa-2x"></i>
+                                <h5 style="color: white; margin: 0;">Design & UX</h5>
+                            </div>
+                            <ul style="color: rgba(255, 255, 255, 0.8); text-align: left;">
+                                <li>Mode sombre/clair</li>
+                                <li>Animations avancées</li>
+                                <li>Version mobile native</li>
+                                <li>Accessibilité améliorée</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <p style="color: rgba(255, 255, 255, 0.6);">
+                        <i class="fas fa-globe me-2"></i>
+                        Bientôt disponible sur <strong style="color: var(--minet-primary);">readme.minet.net</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

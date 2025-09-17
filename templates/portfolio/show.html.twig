@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio #{{ portfolio.id }} - README{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="page-header">Portfolio #{{ portfolio.id }}</h1>
+                <a href="{{ path('app_portfolio_index') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-1"></i>Retour aux Portfolios
+                </a>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Informations du Portfolio</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if portfolio.description %}
+                                <p><strong>Description :</strong><br>{{ portfolio.description }}</p>
+                            {% else %}
+                                <p class="text-muted">Aucune description fournie</p>
+                            {% endif %}
+                            <p><strong>Total des Projets :</strong> {{ portfolio.projects|length }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">Projets</h5>
+                            <span class="badge badge-minet-active">{{ portfolio.projects|length }} projet{{ portfolio.projects|length > 1 ? 's' : '' }}</span>
+                        </div>
+                        <div class="card-body">
+                            {% if portfolio.projects is empty %}
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    Aucun projet dans ce portfolio pour le moment.
+                                </div>
+                            {% else %}
+                                <div class="row">
+                                    {% for project in portfolio.projects %}
+                                        <div class="col-md-6 mb-3">
+                                            <div class="project-card h-100">
+                                                <div class="card-body">
+                                                    <h6 class="card-title">{{ project.name }}</h6>
+                                                    <p class="card-text small">{{ project.description|length > 100 ? project.description|slice(0, 100) ~ '...' : project.description }}</p>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <span class="badge badge-minet-{{ project.status == 'completed' ? 'completed' : (project.status == 'active' ? 'active' : 'planned') }}">
+                                                            {% if project.status == 'completed' %}Terminé{% elseif project.status == 'active' %}Actif{% else %}Planifié{% endif %}
+                                                        </span>
+                                                        {% if project.startDate %}
+                                                            <small class="text-muted">{{ project.startDate|date('M Y') }}</small>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <a href="{{ path('app_project_show', {'id': project.id}) }}" class="btn btn-sm btn-minet-primary">
+                                                        <i class="fas fa-eye me-1"></i>Voir
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
