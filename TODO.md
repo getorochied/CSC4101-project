@@ -6,16 +6,16 @@
 - [ ] Draw a UML or Entity-Association diagram for your data model (optional, but recommended for clarity).
 
 ## 1. Project Initialization
-- [ ] Create a new directory for your project.
-- [ ] Initialize a Git repository and configure your user/email.
-- [ ] Create a new Symfony project using the recommended command.
-- [ ] Remove unnecessary Symfony bundles (e.g., symfony/ux-turbo).
+- [x] Create a new directory for your project.
+- [x] Initialize a Git repository and configure your user/email.
+- [x] Create a new Symfony project using the recommended command.
+- [x] Remove unnecessary Symfony bundles (e.g., symfony/ux-turbo).
 - [ ] Load the project in your IDE.
 
 ## 2. First Launch & Documentation
-- [ ] Test launching the Symfony application (`symfony server:start`).
-- [ ] Note useful resources and document your progress in `README.md`.
-- [ ] Create a `TODO.md` file to track tasks (this file!).
+- [x] Test launching the Symfony application (`symfony server:start`).
+- [x] Note useful resources and document your progress in `README.md`.
+- [x] Create a `TODO.md` file to track tasks (this file!).
 
 ## 3. Data Model: Initial Entities
 - [ ] Configure the database to use SQLite in `.env`.
